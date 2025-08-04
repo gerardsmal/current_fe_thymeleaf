@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">	<title>JPA</title>
+</head>
+<body>
+	<h2 align="center">Elenco socio</h2>
+	<table class="table table-striped">
+		<thead>
+			<tr align="center">
+				<th>Nome</th>
+				<th>Cognome</th>
+				<th>Codice fiscale</th>
+				<th>Email</th>
+				<th>Certificato Medico</th>
+				<th>Abbonamenti</th>
+			</tr>
+		</thead>
+	<tbody>
+		<tr th:each="socio : ${listSocio}" >
+				<td th:text="${socio.nome}" align="center"></td>
+			<td th:text="${socio.cognome}" align="center"></td>
+			<td th:text="${socio.codiceFiscale}" align="center"></td>
+			<td th:text="${socio.email}" align="center"></td>
+			<td></td>
+			<td></td>
+		</tbody>
+	
+	</table>
+	</div>
+</body>
+</html>
