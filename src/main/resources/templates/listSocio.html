@@ -5,7 +5,41 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">	<title>JPA</title>
 </head>
 <body>
-	<h2 align="center">Elenco socio</h2>
+
+	
+	<nav th:insert="~{fragments/navigation :: block-navigation('Elenco soci')}"></nav>
+
+	<div class="container mt-3" align="center">
+	
+		<form class="row g-3 justify-center mb-4" th:action="@{listSocio}"  object=${param} method="get">
+			<div class="col-auto">
+				<input type="text" name='nome' class="form-control" placeholder="nome"
+					th:value="${param.nome}" >
+			</div>
+			<div class="col-auto">
+				<input type="text" name='cognome' class="form-control" placeholder="cognome"
+					th:value="${param.cognome}" >
+			</div>
+
+			<div class="col-auto">
+				<select class="form-select" th:field="${param.attivita}">
+					<option value="" selected>Seleziona attività</option>
+	
+					<option th:each="att : ${listAttivita.dati}"
+						th:value="${att.descrizione}" th:text="${att.descrizione}">			
+				</select>
+			</div>
+		
+			<div class="col-auto">
+				<button type="submit" class="btn btn-secondary">Cerca</button>
+				<a th:href="@{createSocio}" class="btn btn-primary">Create nuovo socio</a>
+			</div>
+		
+		</form>	
+	
+	
+	
+	
 	<table class="table table-striped">
 		<thead>
 			<tr align="center">
@@ -18,16 +52,41 @@
 			</tr>
 		</thead>
 	<tbody>
-		<tr th:each="socio : ${listSocio}" >
-				<td th:text="${socio.nome}" align="center"></td>
+		<tr th:each="socio : ${listSocio}" 
+				th:attr="data-id=${socio.id}"
+				class="clickable-row" style='cursor: pointer'>
+			<td th:text="${socio.nome}" align="center"></td>
 			<td th:text="${socio.cognome}" align="center"></td>
 			<td th:text="${socio.codiceFiscale}" align="center"></td>
 			<td th:text="${socio.email}" align="center"></td>
-			<td></td>
-			<td></td>
+			<td align="center">
+				<a th:href="@{certificato(id=${socio.id})}">
+					<span th:text="(${socio.certificato} != null ? (${socio.certificato.tipo} ? 'agonistico' : 'normale') : 'senza')"></span>
+				</a>
+			</td>
+			<td align="center">
+				<a th:href="@{listAbbonamenti(id=${socio.id})}">
+					<span th:text="${#lists.size(socio.abbonamento) > 0 ? 'abbonamenti attivi' : 'senza abbonamento'}"></span>
+				</a>
+			</td>
 		</tbody>
 	
 	</table>
 	</div>
+
+	<script>
+	  document.addEventListener("DOMContentLoaded", function () {
+	        const rows = document.querySelectorAll(".clickable-row");
+	        rows.forEach(row => {
+	            row.addEventListener("click", () => {
+	                const socioId = row.getAttribute("data-id");
+	                if (socioId) {
+	                    window.location.href = `/updateSocio?id=${socioId}`;
+	                }
+	            });
+	        });
+	    });
+
+	</script>
 </body>
 </html>
