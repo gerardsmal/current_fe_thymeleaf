@@ -14,5 +14,7 @@ public class CertificatoReq {
 	private Boolean tipo;  //false normale true agonistico
 	private LocalDate dataCertificato;
 	private Integer socioId;
+	private Integer tipoSelect;
+	private String dataCertificatoString;
 
 }

@@ -6,6 +6,69 @@
 </head>
 <body>
 <nav th:insert="~{fragments/navigation :: block-navigation('Elenco abbonamenti per socio')}"></nav>
+	<div align="center" class="container">
+		<input type="hidden" th:value="${socioID}"/>
+		
+		<table class="table table-secondary">
+			<thead>
+				<tr align="center">
+					<th>Data iscrizione</th>
+					<th>Attività</th>
+					<th>
+						<a th:href="@{createAbbonamento(socioID=${socioID})}" class="btn btn-primary">create nuovo Abbonamento</a>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="abb : ${listAbb}">
+					<td align="center">
+							<a th:href="@{removeAbbonamento(idAbbonamento=${abb.id}, socioID=${socioID} )}"
+		 								  onclick="return confirm('Sei sicuro di voler rimuovere questo abbonamento?');">
+								<span th:text="${abb.dataIscrizione}"></span>
+							</a>
+					</td>		
+					<td align="center">
+						<ul class="list-unstyled">
+							<li th:each="att : ${abb.attivita}">
+								<a th:href="@{removeAttivitaFromAbbonamento(idAbbonamento=${abb.id}, idAttivita=${att.id}, socioID=${socioID} )}"
+		 								  onclick="return confirm('Sei sicuro di voler rimuovere questa attività?');">
+									<span th:text="${att.descrizione + ' - ' + att.prezzo + '€'}"></span>
+								</a>
+							</li>
+						</ul>
+						<a th:href="@{aggiungiAttivita(socioId=${socioID},abbonamentoId=${abb.id})}" class="btn btn-primary">Aggiungi attivita</a>
+						
+					</td>
+					<td>
+						<div th:if="${addAttivita == 'A'}" align="center">
+    						<form class="row g-2 justify-content-center mb-4 w-50"
+          						th:action="@{/saveAttivitaAbbonamento}"
+          						th:object="${param}"
+          						method="post">
 
+					        	<!-- Select attività -->
+					        	<select class="form-select" th:field="*{id}">
+					            	<option value="" selected>Seleziona attività</option>
+					            	<option th:each="att : ${listAttivita.dati}"
+					                    th:value="${att.id}"
+					                    th:text="${att.descrizione}" />
+					        	</select>
+
+					       	 	<!-- Hidden fields -->
+					        	<input type="hidden" th:field="*{abbonamentiId}" />
+					        	<input type="hidden" th:field="*{socioId}" />
+					
+					        	<div align="center">
+					            	<button type="submit" class="btn btn-info">Aggiungi attività</button>
+					            	<a th:href="@{/listAbbonamenti(id=${socioID})}" class="btn btn-danger">Annulla</a>
+					        	</div>
+					    	</form>
+						</div>
+					
+					</td>
+				</tr>		
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>

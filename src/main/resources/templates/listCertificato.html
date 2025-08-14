@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">	<title>JPA</title>
+</head>
+<body>
+<nav th:insert="~{fragments/navigation :: block-navigation('Certificato Medico')}"></nav>
+<body>
+<div align="center" class='container'>
+		<p class='mt-4'>Inserire dati relative al certificato</p>
+		<form class='form-content' th:action="@{saveCertificato}" th:object="${certificato}" method="post">
+			
+			<input type="hidden" th:field="*{id}"/>
+			<input type="hidden" th:field="*{socioId}"/>
+			
+			<table>
+				<tr>
+					<td><label class='form-label'>Tipo</label></td>				
+					<td>
+						<select class="form-select" th:field="*{tipoSelect}">
+							<option value="2" >Normale</option>
+							<option value="1" >Agonistico</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><label class='form-label'>Data certificato</label></td>				
+					<td><input type="date" th:field="*{dataCertificatoString}" name="data" required></td>
+				</tr>
+			</table>
+		
+			<button type="submit" class="btn btn-primary mt-3">Registra certificato</button>
+
+		</form>
+	</div>	
+
+</body>
+</html>

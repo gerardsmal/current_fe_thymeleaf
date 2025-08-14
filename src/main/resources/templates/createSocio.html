@@ -12,7 +12,7 @@
 			
 			<input type="hidden" th:field="*{id}"/>
 			
-			<table>
+			<table class="table table-secondary w-25">
 				<tr>
 					<td><label class='form-label'>Nome</label></td>				
 					<td><input type="text" th:field="*{nome}" name="nome" placeholder="es. Paolo" required></td>
@@ -30,14 +30,17 @@
 					<td><input type="email" th:field="*{email}" name="email" placeholder="email"></td>
 				</tr>
 			</table>
-		
-			<button type="submit" class="btn btn-primary mt-3">Registra socio</button>
-
+			<div align="center" class="mt-4">		
+				<button type="submit" class="btn btn-primary">Registra socio</button>
+				<a  th:if="*{id} != null" class="btn btn-danger"
+						th:href="@{removeSocio(id=*{id})}"
+		 					onclick="return confirm('Sei sicuro di voler rimuovere questo Socio?');">
+					<span>Cancella socio</span>
+				</a>
+			</div>
 			<div class="container-error mt-2" th:if="*{errrorMsg} != null">
 				<span th:text="*{errrorMsg}" style="color:red">*</span>			
 			</div>
-
-		
 		</form>
 	</div>	
 </body>

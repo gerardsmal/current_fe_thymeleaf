@@ -11,7 +11,7 @@
 
 	<div class="container mt-3" align="center">
 	
-		<form class="row g-3 justify-center mb-4" th:action="@{listSocio}"  object=${param} method="get">
+		<form class="row g-3 justify-center mb-4 mw-100" th:action="@{listSocio}"  object=${param} method="get">
 			<div class="col-auto">
 				<input type="text" name='nome' class="form-control" placeholder="nome"
 					th:value="${param.nome}" >
@@ -30,7 +30,7 @@
 				</select>
 			</div>
 		
-			<div class="col-auto">
+			<div class="col-auto ms-auto">
 				<button type="submit" class="btn btn-secondary">Cerca</button>
 				<a th:href="@{createSocio}" class="btn btn-primary">Create nuovo socio</a>
 			</div>
@@ -40,7 +40,7 @@
 	
 	
 	
-	<table class="table table-striped">
+	<table class="table table-secondary">
 		<thead>
 			<tr align="center">
 				<th>Nome</th>
@@ -60,7 +60,7 @@
 			<td th:text="${socio.codiceFiscale}" align="center"></td>
 			<td th:text="${socio.email}" align="center"></td>
 			<td align="center">
-				<a th:href="@{certificato(id=${socio.id})}">
+				<a th:href="@{listCertificato(id=${socio.id})}">
 					<span th:text="(${socio.certificato} != null ? (${socio.certificato.tipo} ? 'agonistico' : 'normale') : 'senza')"></span>
 				</a>
 			</td>

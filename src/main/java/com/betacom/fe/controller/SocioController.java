@@ -3,6 +3,7 @@ package com.betacom.fe.controller;
 import java.util.Optional;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriBuilder;
 
 import com.betacom.fe.dto.SocioDTO;
 import com.betacom.fe.requests.SocioReq;
@@ -120,25 +120,15 @@ public class SocioController {
 		
 		ResponseBase resp = null;
 		String uri = "socio/" + operation;		
-		
-		if ("create".equalsIgnoreCase(operation)) {
-			resp = clientWeb.post()
+		HttpMethod typeM = "create".equalsIgnoreCase(operation) ? HttpMethod.POST : HttpMethod.PUT;
+	
+			resp = clientWeb.method(typeM)
 					.uri(uri)
 					.contentType(MediaType.APPLICATION_JSON)
 					.bodyValue(req)
 					.retrieve()
 					.bodyToMono(ResponseBase.class)
 					.block();			
-		} else {
-			resp = clientWeb.put()
-					.uri(uri)
-					.contentType(MediaType.APPLICATION_JSON)
-					.bodyValue(req)
-					.retrieve()
-					.bodyToMono(ResponseBase.class)
-					.block();
-
-		}
 		
 		log.debug(operation + " :" + resp.getRc());
 		
@@ -152,5 +142,32 @@ public class SocioController {
 		return "redirect:/listSocio";
 	}
 
-	
+	@GetMapping("removeSocio")
+	public Object removeSocio(@RequestParam(required = true) Integer id) {
+		log.debug("removeSocio:" + id);
+		
+		SocioReq req = new SocioReq();
+		req.setId(id);
+		
+		ResponseBase resp = clientWeb.post()
+				.uri("socio/delete")
+				.contentType(MediaType.APPLICATION_JSON)
+				.bodyValue(req)
+				.retrieve()
+				.bodyToMono(ResponseBase.class)
+				.block();			
+		
+		
+		log.debug("rc:" + resp.getRc() + " msg:" + resp.getMsg());
+		
+		if (!resp.getRc()){
+			ModelAndView mav = new ModelAndView("createSocio");
+			req.setErrrorMsg(resp.getMsg());
+			mav.addObject("socio", req);
+			return mav;
+		}
+		
+		return "redirect:/listSocio";
+		
+	}
 }

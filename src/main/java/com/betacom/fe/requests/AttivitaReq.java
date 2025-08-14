@@ -14,4 +14,5 @@ public class AttivitaReq {
 	private String descrizione;
 	private BigDecimal prezzo;
 	private Integer abbonamentiId;
+	private Integer socioId;
 }
