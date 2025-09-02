@@ -11,6 +11,7 @@
             	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 	<div class="navbar-nav">
                     	<a class="nav-link active" aria-current="page" th:href="@{/listSocio}">Socio</a>
+                  		<a class="nav-link text-success" sec:authorize="hasRole('ROLE_ADMIN')" aria-current="page" th:href="@{/admin/listUtente}">Gestione utente</a>
                   		<a class="nav-link text-success" sec:authorize="hasRole('ROLE_ADMIN')" aria-current="page" th:href="@{/admin/listAttivita}">Gestione attività</a>
                   	</div>
                   	<div class="navbar-nav ms-auto">
