@@ -22,16 +22,22 @@
 		<div th:if="${param.logout}" style="color:red" class="mb-4">
 			You have been logged out
 		</div>
-	
-		<div class="row mb-4"></div>
-		<form th:action="@{/login}" method="post">
+
+	<form th:action="@{/login}" method="post">
+    	<div>
+        	<input type="text" name="username" class="form-text" placeholder="User name" />
+    	</div>
+    	<div>
+        	<input type="password" name="password" class="form-text" placeholder="Password" />
+    	</div>
+    	<div align="center" class="mt-4">
+        	<input type="submit" class="btn btn-success" value="Sign In">
+   	 	</div>
+	</form>
+	<div class="mt-4">
+	<a class="col-2" th:href="@{/register}">Nuovo utente?</a>
+	</div>
 		
-			<div><input  type="text" name="username" class="form-text" placeholder="User name" /></div>
-			<div><input  type="password" name="password" class="form-text" placeholder="Password" /></div>
-		
-			<div class="mt-4"><input type="submit" class="btn btn-primary" value="Sign In"></div>
-		
-		</form>
 	
 	
 	</div>

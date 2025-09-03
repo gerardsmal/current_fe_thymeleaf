@@ -37,7 +37,7 @@
 				</div>
 				<div align="center mt-3">
 	        		<button type="submit" class="btn btn-primary">Registra utente</button>
-	        			<a  th:if="*{id} != null" class="btn btn-danger"
+	        		<a  th:if="*{id} != null" class="btn btn-danger"
 						th:href="@{/admin/removeUtente(id=*{id})}"
 		 					onclick="return confirm('Sei sicuro di voler rimuovere questo user?');">
 					<span>Cancella utente</span>
